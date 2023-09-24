@@ -2,6 +2,8 @@ package cat.nyaa.nyaacore.utils;
 
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 
@@ -26,7 +28,7 @@ public class EntityUtils {
     }
 
     public static Optional<Integer> getEntityTypeId(org.bukkit.entity.EntityType bukkitEntityType) {
-        return getNmsEntityTypes(bukkitEntityType).map(Registry.ENTITY_TYPE::getId);
+        return getNmsEntityTypes(bukkitEntityType).map(BuiltInRegistries.ENTITY_TYPE::getId);
     }
 
     public static int getUpdateInterval(org.bukkit.entity.EntityType bukkitEntityType) {
