@@ -1,7 +1,6 @@
 package cat.nyaa.nyaacore.utils;
 
 import net.minecraft.world.entity.projectile.ThrownTrident;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
 import org.bukkit.entity.Trident;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,7 +30,7 @@ public final class TridentUtils {
 
     public static boolean getTridentDealtDamage(Trident entity) {
         try {
-            ThrownTrident thrownTrident = (ThrownTrident) ((CraftEntity) entity).getHandle();
+            ThrownTrident thrownTrident = (ThrownTrident) NmsUtils.getHandle(entity);
             return (boolean) FIELD_DEALT_DAMAGE.get(thrownTrident);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
@@ -40,7 +39,7 @@ public final class TridentUtils {
 
     public static void setTridentDealtDamage(Trident entity, boolean dealtDamage) {
         try {
-            ThrownTrident thrownTrident = (ThrownTrident) ((CraftEntity) entity).getHandle();
+            ThrownTrident thrownTrident = (ThrownTrident) NmsUtils.getHandle(entity);
             FIELD_DEALT_DAMAGE.set(thrownTrident, dealtDamage);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);

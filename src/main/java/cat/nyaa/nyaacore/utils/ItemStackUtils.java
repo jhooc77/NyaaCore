@@ -14,7 +14,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.*;
@@ -51,7 +50,7 @@ public final class ItemStackUtils {
      * @return binary NBT representation of the item stack
      */
     public static byte[] itemToBinary(ItemStack itemStack) throws IOException {
-        net.minecraft.world.item.ItemStack nativeItemStack = CraftItemStack.asNMSCopy(itemStack);
+        net.minecraft.world.item.ItemStack nativeItemStack = NmsUtils.asNMSCopy(itemStack);
         CompoundTag CompoundTag = new CompoundTag();
         nativeItemStack.save(CompoundTag);
         CompoundTag.putInt(NYAACORE_ITEMSTACK_DATAVERSION_KEY, currentDataVersion);
@@ -104,7 +103,7 @@ public final class ItemStackUtils {
             reconstructedCompoundTag = (CompoundTag) out.getValue();
         }
         net.minecraft.world.item.ItemStack reconstructedNativeItemStack = net.minecraft.world.item.ItemStack.of(reconstructedCompoundTag);
-        return CraftItemStack.asBukkitCopy(reconstructedNativeItemStack);
+        return NmsUtils.asBukkitCopy(reconstructedNativeItemStack);
     }
 
     private static byte[] compress(byte[] data) {
@@ -226,7 +225,7 @@ public final class ItemStackUtils {
 
         try {
             nmsCompoundTagObj = new CompoundTag();
-            nmsItemStackObj = CraftItemStack.asNMSCopy(itemStack);
+            nmsItemStackObj = NmsUtils.asNMSCopy(itemStack);
             itemAsJsonObject = nmsItemStackObj.save(nmsCompoundTagObj);
         } catch (Throwable t) {
             throw new RuntimeException("failed to serialize itemstack to nms item", t);
@@ -237,10 +236,10 @@ public final class ItemStackUtils {
     }
 
     /**
-     * @deprecated caller should use {@link CraftItemStack#asNMSCopy(ItemStack)} directly
+     * @deprecated caller should use {@link NmsUtils#asNMSCopy(ItemStack)} directly
      */
     @Deprecated
     public static Object asNMSCopy(ItemStack itemStack) {
-        return CraftItemStack.asNMSCopy(itemStack);
+        return NmsUtils.asNMSCopy(itemStack);
     }
 }

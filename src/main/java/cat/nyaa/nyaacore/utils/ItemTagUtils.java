@@ -1,7 +1,6 @@
 package cat.nyaa.nyaacore.utils;
 
 import net.minecraft.nbt.CompoundTag;
-import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Field;
@@ -297,11 +296,11 @@ public class ItemTagUtils {
     }
 
     private static Optional<net.minecraft.world.item.ItemStack> getItem(ItemStack itemStack) throws NoSuchFieldException, IllegalAccessException {
-        if (!(itemStack instanceof CraftItemStack)) {
+        if (!(NmsUtils.getCraftItemStackClass().isAssignableFrom(itemStack.getClass()))) {
             return Optional.empty();
         }
         if (handle == null) {
-            handle = CraftItemStack.class.getDeclaredField("handle");
+            handle = NmsUtils.getCraftItemStackClass().getDeclaredField("handle");
         }
         handle.setAccessible(true);
         return Optional.ofNullable((net.minecraft.world.item.ItemStack) handle.get(itemStack));
